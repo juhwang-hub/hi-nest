@@ -1,0 +1,31 @@
+import { Repository } from 'typeorm';
+import { VoemSessionInfo } from './entity/voem.session.entity';
+import { DigitalKeyInfo, RootOEMInfo, RootOEMServerInfo } from '../trackKey/entity/voem.trackKey.entity';
+export declare class VoemSessionService {
+    private readonly voemSessionRepository;
+    private readonly voemOwnerKeyRepository;
+    private readonly voemRootOemInfoRepository;
+    private readonly voemRootOEMServerInfoRepository;
+    constructor(voemSessionRepository: Repository<VoemSessionInfo>, voemOwnerKeyRepository: Repository<DigitalKeyInfo>, voemRootOemInfoRepository: Repository<RootOEMInfo>, voemRootOEMServerInfoRepository: Repository<RootOEMServerInfo>);
+    generateSharingSessionStartLogger(requestId: string, deviceOemId: string, ownerKeyId: string): Promise<void>;
+    redeemSharingSessionStartLogger(sharingSession: string, friendDeviceHandle: string): Promise<void>;
+    cancelSharingSessionStartLogger(requestId: string, sharingSession: string): Promise<void>;
+    eventNotificationStartLogger(ownerKeyId: string, eventType: string, eventData: object): Promise<void>;
+    keySharingExchangeStartLogger(requestId: string, deviceOemId: string, keyAction: string, keyID: string): Promise<void>;
+    selectSessionDB(sessionId: string): Promise<VoemSessionInfo[]>;
+    selectOEMUrl(doemId: string): Promise<RootOEMServerInfo>;
+    checkValidity(keyId: string): Promise<number>;
+    insertSessionDB(sessionId: string, ownerKeyId: string, doemId: string, date: Date, session_period_minutes: number, session_status: string): Promise<string>;
+    updateFriendDoemUrlDB(sessionId: string, foemUrl: string, friendDeviceHandle: string): Promise<any>;
+    cancleSessionDB(sessionId: string): Promise<any>;
+    deleteSessionDB(sessionId: string): Promise<"0" | "1">;
+    sessionValidityCheck(sessionId: string, nowDate: Date): Promise<boolean>;
+    selectOwnerKeyInfo(keyId: string): Promise<DigitalKeyInfo[]>;
+    makeEventNotificationData(server: string, ownerKeyInfoObj: object): Promise<void>;
+    createSharedKey(vehicleOemId: string, x_timestamp: string, requestId: string, keyID: string, sharingSession: object, keyCreationRequest: string): Promise<{}>;
+    sendCreateSharedKey(requestId: string, selectResult: {}, res: any): Promise<void>;
+    signSharedKey(vehicleOemId: string, x_timestamp: string, requestId: string, sharingSession: object, keySigningRequest: string): Promise<{}>;
+    sendSignSharedKey(requestId: string, selectResult: {}, res: any): Promise<void>;
+    importSharedKey(vehicleOemId: string, x_timestamp: string, requestId: string, keyID: string, sharingSession: object, importRequest: string): Promise<{}>;
+    sendImportsharedKey(requestId: string, selectResult: {}, res: any): Promise<void>;
+}

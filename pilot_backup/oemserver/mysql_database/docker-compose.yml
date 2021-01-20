@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  db:
+    env_file: .env
+    build: ./db
+    # image: cs_db:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+      #MYSQL_DATABASE: scms
+      #MYSQL_USER: docker
+      #MYSQL_PASSWORD: docker
+    volumes:
+      - ./db/data/cred_store:/var/lib/mysql
+      - ./db/data/log:/var/log
+      - ./db/data/backup:/workdir/db_backup
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+
+  # cs:
+  #   env_file: .env
+  #   build:
+  #     context: ./cs
+  #   volumes:
+  #     - ./logs/cs:/workdir/logs
+  #     - ./cs/src:/workdir/src
+  #     - ./request_upload/check_file:/workdir/request_upload/check_file
+  #     - ./result/verification:/workdir/result/verification
+  #     - ./result/fail_reason:/workdir/result/fail_reason
+  #   ports:
+  #     - '${CS_PORT}:9900'
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #     - WERKZEUG_RUN_MAIN=False
+  #   command: flask run --host=0.0.0.0 --port=9900
+  #   entrypoint: /wait-for-it.sh ${DB_ADDRESS}:${DB_PORT} -t 0 -s --
+
+  # cs-ui:
+  #   working_dir: /workdir
+  #   build:
+  #     context: ./cs-ui
+  #   volumes:
+  #     - ./cs-ui/src/src:/workdir/src
+  #     - ./cs-ui/src/public:/workdir/public
+  #     - ./cs-ui/src/release:/workdir/release
+  #   ports:
+  #     - "${CS_UI_PORT}:8000"
+  #   command: npm run serve
+
+  # cs-v2x-server:
+  #   env_file: .env
+  #   build:
+  #     context: ./cs-v2x-server
+  #   volumes:
+  #     - ./cs-v2x-server/src/src:/workdir/src
+  #   ports:
+  #     - "${CS_V2X_SERVER_PORT}:5430"
+  #   command: npm run start:debug

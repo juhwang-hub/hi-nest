@@ -1,0 +1,14 @@
+[submodule "common"]
+	path = common
+	url = http://stash.pentasecurity.com/scm/ap/common.git
+
+[submodule "builder"]
+	path = builder
+	url = http://stash.pentasecurity.com/scm/ap/builder.git
+
+[submodule "cs-gw"]
+	path = cs-gw
+	url = http://stash.pentasecurity.com/scm/accs/certsysweb2019.git
+[submodule "cs-ui"]
+	path = cs-ui
+	url = http://stash.pentasecurity.com/scm/accs/certsysweb2019.git

@@ -1,0 +1,28 @@
+version: '3'
+
+
+ 
+
+services:
+
+  db:
+
+    image: mysql:latest
+
+    environment:
+
+      MYSQL_ROOT_PASSWORD: docker
+
+      MYSQL_DATABASE: ccc
+
+    volumes:
+
+      - ./db/data/cred_store:/var/lib/mysql
+
+      - ./db/data/log:/var/log
+
+      - ./db/data/backup:/workdir/db_backup
+
+    ports:
+
+      - 8800:3306
